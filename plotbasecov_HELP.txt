@@ -1,0 +1,49 @@
+modelo                package:unknown                R Documentation
+
+Plots coverage graphs
+
+Description:
+
+Plots graphs from output .BEDs from bedTools coverage function.
+
+Usage:
+
+plot.baseCoverage(x, geneID, measure)
+
+Arguments:
+
+x		dataset. Either comes in form of a dataframe read from a file, or a list of files from which the information will be read from.
+geneID		name of the gene desired for the plot. Has to be the same as it appears on file.
+measure 	only necessary if there is more than one file in x. Measure desired in case the dataset has more than one file. Can be "mean", "median" or "variance", for mean, median or variance, respectively. If left blank, it will return all three graphs in the same window, each at a time (press enter to see the next one, in that case).
+
+Details:
+
+This function's main goal is to help the representation and visualization of the coverage per base or bald spots in samples that were sequenced using any high throughput technology. It takes the information stored in an output of the bedTools coverage suite, while using the -d option, which comes as a .BED file, and plots graphs with these informations. May be used to plot a single sample's coverage, as well as to calculate the mean, median and variance of several samples, and plot these informations on graphs.
+
+
+Notes:
+
+Every tick found on X axis represents either the first or the last base of the exon of the gene of choice. In the case of exome sequencing and some gene panels, points and lines will only appear inside these ticks, as only the exons are sequenced. Parts of the gene that had no coverage will appear as blank.
+The geneID argument must receive the gene name as it is written on the original file, or it will return an error.
+The measure argument is not used when the x argument has only has one file in it, as it is only has one coverage information, which will be plotted by itself in the graph.
+
+
+Author(s):
+
+Benedetti, A.
+
+References:
+
+[http://genome.ucsc.edu/FAQ/FAQformat.html#format1|UCSC FAQ] for UCSC explanation on .bed files and [http://bedtools.readthedocs.io/en/latest/content/tools/coverage.html|bedTools coverage tool] for a full explanation on the coverage tool of bedTools.
+
+
+Examples:
+
+#for one file
+x <- read.table("file1.bed", sep = "\t", as.is = T) #read your file
+plot.baseCoverage(x, geneID = "LHX3")
+
+#for more than one file
+x <- dir(path = ".", pattern = ".bed") #save several file names in one object
+plot.baseCoverage(x, geneID = "LHX3", measure = "mean")
+
